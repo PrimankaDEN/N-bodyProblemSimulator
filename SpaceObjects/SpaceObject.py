@@ -7,15 +7,15 @@ from Utils.Vector2 import Vector2
 
 
 class SpaceObject:
-    _name = ""
-    _type = ""
+    _name = "Name"
+    _type = "Planet"
     _mass = 0
     _speed = Vector2(0.0, 0.0)
     _coord = Vector2(0.0, 0.0)
     _accel = Vector2(0.0, 0.0)
-    _color = "#FF0000"
-    _size = 0
-    _layoutSize = Vector2(0, 0)
+    _color = "#FFFFFF"
+    _size = 1
+    _layoutSize = Vector2(1, 1)
     _isPositionFixed = False
     _isPathShown = IS_PATH_SHOWN
 

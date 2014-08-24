@@ -41,7 +41,7 @@ from SpaceObjects.SpaceObjectsController import *
 
 class GameController:
     _isStarted = False
-    _objects = SpaceObjectController()
+    _objects = SpaceObjectsController()
 
     def __init__(self):
         self.startMainScreen()
@@ -117,7 +117,7 @@ class GameController:
         moon.setColor("gray")
         moon.setSize(4)
 
-        objects = SpaceObjectController()
+        objects = SpaceObjectsController()
         objects.append(sun)
         objects.append(sun2)
         objects.append(sun3)
@@ -131,11 +131,11 @@ class GameController:
         bg = Surface((WIN_WIDTH, WIN_HEIGHT))
         bg.fill(Color(SPACE_COLOR))
         #draw.circle (bg, Color(SUN_COLOR), (X0, Y0), 10)
-
         #Timer init
         timer = pygame.time.Clock()
         done = False
-        while GameController.isStarted():
+        while not done:
+
             for e in pygame.event.get():
                 if e.type == QUIT or e.type == KEYDOWN and e.key == K_ESCAPE:
                     done = True
@@ -146,3 +146,8 @@ class GameController:
             self._objects.calculateAllAccels()
             self._objects.drawAll(self._screen)
             pygame.display.update()
+
+
+controller = GameController()
+controller._isStarted=True
+controller.startMainScreen()

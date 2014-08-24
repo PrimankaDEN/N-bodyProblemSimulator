@@ -4,7 +4,7 @@ from Utils.Vector2 import *
 from Utils.Properties import *
 
 
-class SpaceObjectController:
+class SpaceObjectsController:
     _objects = []
 
     def __init__(self):
