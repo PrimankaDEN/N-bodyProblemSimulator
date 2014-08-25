@@ -18,6 +18,7 @@ class SpaceObject:
     _layoutSize = Vector2(1, 1)
     _isPositionFixed = False
     _isPathShown = IS_PATH_SHOWN
+    _offset = Vector2(0, 0)
 
     def __init__(self, name, type, coordVector, speedVector):
         self._name = name
@@ -46,7 +47,7 @@ class SpaceObject:
     def setPositionFix(self, isFixed):
         self._isPositionFixed = isFixed
 
-    #acceleration
+    # acceleration
     def addAccel(self, accelArg):
         self._accel = accelArg
 
@@ -61,7 +62,7 @@ class SpaceObject:
     def setSize(self, size):
         self._size = size
 
-    #def setLayoutSize(self, layoutSize):
+    # def setLayoutSize(self, layoutSize):
     #    self._layoutSize = layoutSize
 
     def setMass(self, mass):
@@ -82,13 +83,16 @@ class SpaceObject:
         if not IS_PATH_SHOWN:
             draw.circle(self.__planet,
                         Color(self._color),
-                        (self._layoutSize.x // 2, self._layoutSize.y // 2), self._size // 2)
+                        (self._layoutSize.x, self._layoutSize.y), self._size)
         else:
             draw.circle(self.__planet,
                         Color(self._color),
-                        (self._layoutSize.x // 2,  self._layoutSize.x // 2), self._size//2)
-        screen.blit(self.__planet, (X0 + int(self._coord.x*SCALE), Y0 + int(self._coord.y*SCALE)))
+                        (self._layoutSize.x, self._layoutSize.x), self._size)
+        screen.blit(self.__planet, (X0 + int(self._coord.x * SCALE), Y0 + int(self._coord.y * SCALE)))
 
     def drawObject(self, screen):
-        screen.blit(self.__planet, (X0 + int(self._coord.x*SCALE), Y0 + int(self._coord.y*SCALE)))
+        screen.blit(self.__planet, (X0 + int(self._coord.x * SCALE), Y0 + int(self._coord.y * SCALE)))
 
+    def drawObjectWithOffset(self, screen, offset):
+        screen.blit(self.__planet,
+                    (X0 + offset.x + int(self._coord.x * SCALE), Y0 + offset.y + int(self._coord.y * SCALE)))

@@ -44,6 +44,9 @@ class GameController:
     _isStarted = False
     _objects = SpaceObjectsController()
 
+    _screenOffsetX=0
+    _screenOffsetY=0
+
     def __init__(self):
         self.startMainScreen()
 
@@ -113,19 +116,28 @@ class GameController:
         while not done:
 
             for e in pygame.event.get():
-                if e.type == QUIT or e.type == KEYDOWN and e.key == K_ESCAPE:
+                if e.type == QUIT:
                     done = True
-                    break
+                if e.type == KEYDOWN:
+                    if e.key == K_LEFT:
+                        self._screenOffsetX-=5;
+                    elif e.key == K_RIGHT:
+                        self._screenOffsetX+=5;
+                    elif e.key == K_DOWN:
+                        self._screenOffsetY+=5;
+                    elif e.key == K_UP:
+                        self._screenOffsetY-=5;
+                    elif  e.key == K_ESCAPE:
+                        done =True
+
 
             if not IS_PATH_SHOWN:
                 self._screen.blit(self._space, (0, 0))
-
+            self._objects.setOffset(Vector2(self._screenOffsetX, self._screenOffsetY))
             self._objects.calculateAllAccels()
             self._objects.drawAll(self._screen)
             pygame.display.update()
 
 
-configParser = Config()
-
-controller = configParser.getControllerFromConfig("Configs/main.conf")
+controller = GameController()
 controller.startMainScreen()
