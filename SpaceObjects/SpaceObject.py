@@ -14,7 +14,7 @@ class SpaceObject:
     _coord = Vector2(0.0, 0.0)
     _accel = Vector2(0.0, 0.0)
     _color = "#FFFFFF"
-    _size = 1
+    _size = 10
     _layoutSize = Vector2(1, 1)
     _isPositionFixed = False
     _isPathShown = IS_PATH_SHOWN

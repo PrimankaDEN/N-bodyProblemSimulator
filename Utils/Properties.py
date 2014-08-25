@@ -1,7 +1,7 @@
 __author__ = 'PrimankaDEN'
 
 
-DELTA_TIME = 0.2
+DELTA_TIME = 0.09
 WIN_WIDTH = 1000
 WIN_HEIGHT = 700
 X0 = WIN_WIDTH // 2

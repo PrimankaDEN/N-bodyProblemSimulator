@@ -25,7 +25,7 @@ class SpaceObjectsController:
             for j in range(len(self._objects)):
                 if i == j:
                     continue
-                summaryAccel = summaryAccel + SpaceObjectController.calculateAccel(self._objects[i], self._objects[j])
+                summaryAccel = summaryAccel + SpaceObjectsController.calculateAccel(self._objects[i], self._objects[j])
             self._objects[i].addAccel(summaryAccel)
         for i in range(len(self._objects)):
             self._objects[i].calculateCoords()

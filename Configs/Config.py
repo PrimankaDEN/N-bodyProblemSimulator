@@ -6,7 +6,7 @@ from SpaceObjects.SpaceObject import *
 
 
 class Config:
-    system="SYSTEM"
+    system = "SYSTEM"
     type = "TYPE"
     x = "X"
     y = "Y"

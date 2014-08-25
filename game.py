@@ -2,6 +2,7 @@ __author__ = 'PrimankaDEN'
 
 import pygame
 from pygame import *
+from Configs.Config import *
 
 from SpaceObjects.SpaceObject import *
 from SpaceObjects.SpaceObjectsController import *
@@ -65,15 +66,6 @@ class GameController:
     def __init__(self):
 
         DISPLAY = (WIN_WIDTH, WIN_HEIGHT)
-        PLANET_SIZE = 7
-
-        #Sun position
-
-        #Sun mass
-        M0 = 5000
-        #Stop conditions
-        CRASH_DIST = 10
-        OUT_DIST = 1000
 
         #Screen init
         pygame.init()
@@ -85,46 +77,30 @@ class GameController:
         self._space.fill(Color(SPACE_COLOR), None, 0)
 
         #Sun init
-        sun = SpaceObject("Sun", "star", Vector2(500, 0), Vector2(0, 3))
+        sun = SpaceObject("Sun", "star", Vector2(0, 0), Vector2(0, 0))
         sun.setMass(5000)
         sun.setColor("yellow")
         sun.setSize(15)
-        #sun.setPositionFix(True)
-
-        #Sun2 init
-        sun2 = SpaceObject("Sun", "star", Vector2(-500, 0), Vector2(0, -3))
-        sun2.setMass(5000)
-        sun2.setColor("yellow")
-        sun2.setSize(15)
-        #sun2.setPositionFix(True)
-
-        #Sun3 init
-        sun3 = SpaceObject("Sun", "star", Vector2(0, 0), Vector2(0, -7))
-        sun3.setMass(5000)
-        sun3.setColor("yellow")
-        sun3.setSize(15)
-        sun3.setPositionFix(True)
+        sun.setPositionFix(True)
 
         #Earth init
-        earth = SpaceObject("Earth", "planet", Vector2(0, 100), Vector2(7, 1))
-        earth.setMass(1)
+        earth = SpaceObject("Earth", "planet", Vector2(0, 300), Vector2(3, 0))
+        earth.setMass(1000)
         earth.setColor("blue")
         earth.setSize(4)
 
-        #Moon init
-        moon = SpaceObject("Moon", "planet", Vector2(100, -200), Vector2(1, 2))
-        moon.setMass(20)
-        moon.setColor("gray")
-        moon.setSize(4)
+        #Earth init
+        earth2 = SpaceObject("Earth", "planet", Vector2(0, -100), Vector2(2, -3))
+        earth2.setMass(1)
+        earth2.setColor("blue")
+        earth2.setSize(4)
 
-        objects = SpaceObjectsController()
-        objects.append(sun)
-        objects.append(sun2)
-        objects.append(sun3)
-        objects.append(earth)
-        #objects.append(moon)
-        objects.initAll(self._screen)
-
+        self._objects = SpaceObjectsController()
+        self._objects.append(sun)
+        self._objects.append(earth)
+        self._objects.append(earth2)
+        self._objects.initAll(self._screen)
+        print self._objects
     def startMainScreen(self):
 
         #Space init
@@ -143,11 +119,13 @@ class GameController:
 
             if not IS_PATH_SHOWN:
                 self._screen.blit(self._space, (0, 0))
+
             self._objects.calculateAllAccels()
             self._objects.drawAll(self._screen)
             pygame.display.update()
 
 
-controller = GameController()
-controller._isStarted=True
+configParser = Config()
+
+controller = configParser.getControllerFromConfig("Configs/main.conf")
 controller.startMainScreen()
