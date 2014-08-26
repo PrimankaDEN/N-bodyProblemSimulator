@@ -47,24 +47,6 @@ class GameController:
     _screenOffsetX=0
     _screenOffsetY=0
 
-    def __init__(self):
-        self.startMainScreen()
-
-    @staticmethod
-    def resume():
-        GameController.isStarted = True;
-
-    @staticmethod
-    def pause():
-        GameController.isStarted = False;
-
-    @staticmethod
-    def isStarted():
-        return GameController._isStarted
-
-    @staticmethod
-    def start():
-        GameController.resume()
 
     def __init__(self):
 
@@ -79,31 +61,12 @@ class GameController:
         self._space = Surface(DISPLAY)
         self._space.fill(Color(SPACE_COLOR), None, 0)
 
-        #Sun init
-        sun = SpaceObject("Sun", "star", Vector2(0, 0), Vector2(0, 0))
-        sun.setMass(5000)
-        sun.setColor("yellow")
-        sun.setSize(15)
-        sun.setPositionFix(True)
+    def setObjectsController(self, controller):
+        self._objects=controller
 
-        #Earth init
-        earth = SpaceObject("Earth", "planet", Vector2(0, 300), Vector2(3, 0))
-        earth.setMass(1000)
-        earth.setColor("blue")
-        earth.setSize(4)
-
-        #Earth init
-        earth2 = SpaceObject("Earth", "planet", Vector2(0, -100), Vector2(2, -3))
-        earth2.setMass(1)
-        earth2.setColor("blue")
-        earth2.setSize(4)
-
-        self._objects = SpaceObjectsController()
-        self._objects.append(sun)
-        self._objects.append(earth)
-        self._objects.append(earth2)
+    def initToDraw(self):
         self._objects.initAll(self._screen)
-        print self._objects
+
     def startMainScreen(self):
 
         #Space init
@@ -140,4 +103,7 @@ class GameController:
 
 
 controller = GameController()
+parser = Config("Configs/main.ini")
+controller.setObjectsController(parser.getControllerFromConfig())
+controller.initToDraw()
 controller.startMainScreen()
