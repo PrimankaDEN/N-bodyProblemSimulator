@@ -4,10 +4,11 @@ import pygame
 from pygame import *
 from Configs.Config import *
 
+from math import *
 from SpaceObjects.SpaceObject import *
 from SpaceObjects.SpaceObjectsController import *
 
-#rMax = 0.0
+# rMax = 0.0
 #rMin = 1000000.0
 #rPrev = 0.0
 #rPrevPrev = 0.0
@@ -44,8 +45,8 @@ class GameController:
     _isStarted = False
     _objects = SpaceObjectsController()
 
-    _screenOffsetX=0
-    _screenOffsetY=0
+    _screenOffsetX = 0
+    _screenOffsetY = 0
 
 
     def __init__(self):
@@ -62,10 +63,13 @@ class GameController:
         self._space.fill(Color(SPACE_COLOR), None, 0)
 
     def setObjectsController(self, controller):
-        self._objects=controller
+        self._objects = controller
 
     def initToDraw(self):
         self._objects.initAll(self._screen)
+
+    def addObject(self, object):
+        self._objects.append(object)
 
     def startMainScreen(self):
 
@@ -83,16 +87,15 @@ class GameController:
                     done = True
                 if e.type == KEYDOWN:
                     if e.key == K_LEFT:
-                        self._screenOffsetX-=5;
+                        self._screenOffsetX -= 5;
                     elif e.key == K_RIGHT:
-                        self._screenOffsetX+=5;
+                        self._screenOffsetX += 5;
                     elif e.key == K_DOWN:
-                        self._screenOffsetY+=5;
+                        self._screenOffsetY += 5;
                     elif e.key == K_UP:
-                        self._screenOffsetY-=5;
-                    elif  e.key == K_ESCAPE:
-                        done =True
-
+                        self._screenOffsetY -= 5;
+                    elif e.key == K_ESCAPE:
+                        done = True
 
             if not IS_PATH_SHOWN:
                 self._screen.blit(self._space, (0, 0))
@@ -101,9 +104,23 @@ class GameController:
             self._objects.drawAll(self._screen)
             pygame.display.update()
 
+    def setResistance(self, res):
+        self._objects.setResistance(res)
 
 controller = GameController()
 parser = Config("Configs/main.ini")
 controller.setObjectsController(parser.getControllerFromConfig())
+
+number =100
+
+for i in range(number):
+    object = SpaceObject("star", "Star", Vector2(600 * sin(2*math.pi*i/number), 600*cos(2*math.pi*i/number)), Vector2(0, 0))
+    object.setMass(-1000)
+    object.setColor("yellow")
+    object.setSize(10);
+    object.setPositionFix(True)
+    controller.addObject(object)
+
+controller.setResistance(0.0001)
 controller.initToDraw()
 controller.startMainScreen()

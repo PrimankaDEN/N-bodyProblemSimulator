@@ -7,6 +7,7 @@ from Utils.Properties import *
 class SpaceObjectsController:
     _objects = []
     _offset = Vector2(0, 0)
+    _resistanse=0.0
 
     def __init__(self):
         self._objects = []
@@ -25,12 +26,15 @@ class SpaceObjectsController:
 
     def calculateAllAccels(self):
         for i in range(len(self._objects)):
+            if self._objects[i].isPositionFixed():
+                continue
             summaryAccel = Vector2(0.0, 0.0)
             for j in range(len(self._objects)):
                 if i == j:
                     continue
                 summaryAccel = summaryAccel + SpaceObjectsController.calculateAccel(self._objects[i], self._objects[j])
             self._objects[i].addAccel(summaryAccel)
+            self._objects[i].calculateResistance(self._resistanse)
         for i in range(len(self._objects)):
             self._objects[i].calculateCoords()
 
@@ -55,3 +59,6 @@ class SpaceObjectsController:
         for i in range(len(self._objects)):
             str += self._objects[i]._name + " "
         return str
+
+    def setResistance(self,res):
+        self._resistanse=res

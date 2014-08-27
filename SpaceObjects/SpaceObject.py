@@ -47,6 +47,9 @@ class SpaceObject:
     def setPositionFix(self, isFixed):
         self._isPositionFixed = isFixed
 
+    def isPositionFixed(self):
+        return self._isPositionFixed
+
     # acceleration
     def addAccel(self, accelArg):
         self._accel = accelArg
@@ -96,3 +99,9 @@ class SpaceObject:
     def drawObjectWithOffset(self, screen, offset):
         screen.blit(self.__planet,
                     (X0 + offset.x + int(self._coord.x * SCALE), Y0 + offset.y + int(self._coord.y * SCALE)))
+
+    def calculateResistance(self, resistance):
+        speed = self.getSpeed()
+        speed.x*=1.0-resistance
+        speed.y*=1.0-resistance
+        self.setSpeed(speed)
